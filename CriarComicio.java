@@ -1,97 +1,71 @@
+package MainPackage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//import com.mycompany.show.Show.LerDados;//Aqui vou substituir para o package do arquivo
 
 public class CriarComicio {
-    /*public static void main(String args[]){
-        registerComicio();
-}*/
-    public record Comicio(
-        String nome,
-        String data,
-        String local,
-        String Partido,
-        String descricao,
-        Boolean autorizacao
-    ) {
-        public static RegisterComicio Comiciocad(List<String> cadastoComicio){
-            if(cadastocomicio.size() != 6){
-                throw new IllegalArgumentException("A lista tem que ter 6 elementos ");
-            }
-            return new RegisterComicio(
-            cadastoComicio.get(0), 
-            cadastoComicio.get(1), 
-            cadastoComicio.get(2), 
-            cadastoComicio.get(3), 
-            cadastoComicio.get(4),
-            Boolean.parseBoolean(cadastoComicio.get(5)));
+    public static class Comicio{
+        private static int nextID = 1;
+
+        int id;
+        String Nome;
+        String Data;
+        String Horario;
+        String Local;
+        String Descricao;
+        Boolean Autorizacao;
+
+        public Comicio(String Nome, String Data, String Horario, String Local, String Descricao,Boolean Autorizacao){
+            this.id = nextID++;
+            this.Nome = Nome;
+            this.Data = Data;
+            this.Horario = Horario;
+            this.Local = Local;
+            this.Descricao = Descricao;
+            this.Autorizacao = Autorizacao;
+
+
         }
 
     }
 
-    public  class RegistroComicio{
+    public static List<Comicio> addComicio(){
+        lerDados ler = new lerDados();
 
-        private static void registerComicio(){
-            System.out.print("Digite o nome do comicio: ");
-            var nomeComicio = LerDados.lerTexto();
-    
-            System.out.print("Digite a data do comicio: (ex: 00-00-0000)");
-            var dataComcio = LerDados.lerIntMaiorQueZero("Ah, parça, colabora, vai! Digita aí um número, por favor: ");
-    
-            System.out.print("Digite o local do comicio: ");
-            var localComicio = LerDados.lerTexto();
+        boolean select = true;
+        List<CriarComicio.Comicio> comicios = new ArrayList<>();
 
-            System.out.print("Digite o partido: ");
-            var partidoComicio = LerDados.lerTexto();
+        while(select){
+            System.out.println("\nDigite o nome do comício:");
+            String nomeComicio = ler.lerTexto("\nPreencha o campo de nome do comício!:\n");
 
-            System.out.print("Digite unma breve descrição do comicio: ");
-            var descricaoComicio = LerDados.lerTexto();
+            System.out.println("\nDigite a data do comício:");
+            String dataComicio = ler.lerData("\nPreencha o campo de data do comício no formato dd/mm/yyyy!:\n");
 
-            System.out.println("Tem autorização? Sim[S] Não[N]");
-            var autorizacaoComicio = lerDados.lerTexto(null);
+            System.out.println("\nDigite o horário do comício:");
+            String horarioComicio = ler.lerHorario("\nPreencha o campo de horário do comício no formato HH:mm!:\n");
 
-            if(autorizacaoComicio.equals("s") == true){
-                autorizacaoComicio = "true";
-            }else{
-                autorizacaoComicio = "false";
-                System.out.println("Vá atrás de uma autirização");
-            }
-    
-            var comicio = new Comicio(nomeComicio, dataComcio, localComicio, partidoComicio,descricaoComicio,autorizacaoComicio );
-            ArquivoComicio.salvar(veiculo);
-            System.out.println("Comicio cadastrado!");
+            System.out.println("\nDigite o local do comício:");
+            String localComicio = ler.lerTexto("\nPreencha o campo de local do comício!:\n");
+
+            System.out.println("\nDigite a descrição do comício:");
+            String descricaoComicio = ler.lerTexto("\nPreencha o campo de descrição do comício!:\n");
+
+            System.out.println("\nO comício tem atorização? (S/N)");
+            String autorizacaoComicio = ler.lerTexto("\nPreencha o campo de disponibilidade do comício com!:\n");
+
+            boolean conversao_Disponivel =  autorizacaoComicio.toUpperCase().equals("S")  ||
+                    autorizacaoComicio.toUpperCase().equals("SIM") ? true : false;
+
+            comicios.add(new CriarComicio.Comicio(nomeComicio, dataComicio, horarioComicio, localComicio, descricaoComicio, conversao_Disponivel));
+
+            System.out.println("\nDeseja Adicionar outro evento? (S/N)");
+            String optionAdicionar_OutroEvento = ler.lerTexto("\nPreencha o campo!:\n");
+
+            option =    optionAdicionar_OutroEvento.toUpperCase().equals("S") ||
+                    optionAdicionar_OutroEvento.toUpperCase().equals("SIM") ? true : false;
+
         }
-
     }
-    /* 
-    public static String[] registerComicio(){
-        
-        String[] totalInformation = {"","","","",""};
-        String[] informationRegister = {"o Nome","a Data","o Local","o Partido","a Descricão"};
-        boolean autorizacao = false;
-        String opcao = "";
-        String showInformation = "";
-            for(int c = 0 ; c < 5; c++)
-            {
-                System.out.println("Escreva " + informationRegister[c] + " do evento:");
-                totalInformation[c] = LerDados.readString("Tente novamente: ");
-                showInformation = totalInformation[c]+ " " + showInformation;
-        }   System.out.println("Você tem autorização para realizar esse comicio?  [S]sim/[n]Não");
-            opcao = LerDados.readString("Tente novamente: ");
-            if(opcao.toUpperCase().equals("S")){
-                System.out.println("Otimo, Bom Trabalho");
-                 autorizacao = true;
-            }else{
-                System.out.println("Procure um orgão publicom para conseuir a Autorização");
-                autorizacao = false;
-            }
-            System.out.println("Informaçcoes: " + showInformation + " ");
-            if (!autorizacao){
-                return new String[0];
-            }  
-            
-            return totalInformation;
-}*/
 }
