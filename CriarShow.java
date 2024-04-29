@@ -1,3 +1,6 @@
+package MainPackage;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class CriarShow {
@@ -13,21 +16,21 @@ public class CriarShow {
          Boolean ingressosDisponiveis){
         
 
-        public static RegisterShow Showcad(List<String> cadastoShow){
-            if(cadastoShow.size() !=7){
+        public static RegisterShow Showcad(List<String> cadastroShow){
+            if(cadastroShow.size() !=7){
                 throw new IllegalArgumentException("A lista tem que ter 7 elementos ");
             }
-            return new RegisterShow(cadastoShow.get(0), 
-            cadastoShow.get(1), 
-            cadastoShow.get(2), 
-            cadastoShow.get(3), 
-            Integer.parseInt(cadastoShow.get(4)), 
-            cadastoShow.get(5),
-            Boolean.parseBoolean(cadastoShow.get(6)));
+            return new RegisterShow(cadastroShow.get(0), 
+            cadastroShow.get(1), 
+            cadastroShow.get(2), 
+            cadastroShow.get(3), 
+            Integer.parseInt(cadastroShow.get(4)), 
+            cadastroShow.get(5),
+            Boolean.parseBoolean(cadastroShow.get(6)));
         }
     } 
 
-        public static void CadShow(){
+        public static List<String> CadShow(){
             System.out.println("__________Cadasto de Show_________\nNome do Show: ");
             var nome = lerDados.lerTexto(null);
             System.out.println("Data do Show: ");
@@ -52,5 +55,12 @@ public class CriarShow {
             boolean ingressosDisponiveisBool = ingressosDisponiveis.equalsIgnoreCase("s");
 
             var show = new RegisterShow(nome, data, local, horario, limiteIngressos, descricao, ingressosDisponiveisBool);
+            return Arrays.asList(nome, data, local, horario, String.valueOf(limiteIngressos), descricao, ingressosDisponiveis);
+        }
+
+        public static void Printshow(){
+            List<String> listaShow = CadShow(); // Obtém a lista de dados do show  
+            RegisterShow show = RegisterShow.Showcad(listaShow);
+            System.out.println(show);
         }
 }
